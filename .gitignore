@@ -1,0 +1,26 @@
+# Directories #
+###############
+tess-lib/*
+
+
+
+
+
+# VS Project #
+##############
+tess-cs/*.dll
+tess-cs/bin/*
+tess-cs/obj/debug/*
+*.user
+*.log
+*.tlog
+*.cache
+*.obj
+*.sdf
+*.opensdf
+*.lastbuildstate
+*.unsuccessfulbuild
+*.suo
+*.res
+*.ipch
+*.manifest
