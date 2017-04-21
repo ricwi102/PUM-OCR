@@ -44,11 +44,13 @@ Tesseract repo: [github.com/tesseract-ocr/tesseract](https://github.com/tesserac
 Följ dessa steg:
 1. Klona repot
 2. Öppna `CMakeLists.txt` och lägg till följande (innan Leptonica_DIR används)  
-```if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
+```
+if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
   set(Leptonica_DIR ${PROJECT_SOURCE_DIR}/../../lept/build64)
 else()
   set(Leptonica_DIR ${PROJECT_SOURCE_DIR}/../../lept/build32)
-endif()```
+endif()
+```
 3. Skapa build dir, exempelvis `mkdir build64 && cd build64`
 4. Kör `cmake ../tesseract-master -G "Visual Studio 15 2017 Win64"` från build dir 
 5. Projektet kan sedan öppnas. Förslagsvis körs 'Unload all projects' på "Training Tools"-mappen
@@ -60,7 +62,8 @@ Enklaste vägen härifrån är att ta bort de filer som finns under tesseract pr
 
 
 ## Förslag på filstruktur
-```_tess-lib
+```
+_tess-lib
 |──_lept
 |  +──_build32
 |  +──_build64
@@ -69,7 +72,8 @@ Enklaste vägen härifrån är att ta bort de filer som finns under tesseract pr
 +──_tess
    +──_build32
    +──_build64
-   +──_tesseract_master```
+   +──_tesseract_master
+```
 
 
 
