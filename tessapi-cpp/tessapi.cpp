@@ -15,8 +15,8 @@ void api_end(tesseract::TessBaseAPI* tess) {
 	tess->End();
 }
 
-void api_init(tesseract::TessBaseAPI* tess, const char* lang = "eng") {
-	tess->Init("./tessdata", "eng");
+void api_init(tesseract::TessBaseAPI* tess, const char* lang) {
+	tess->Init("./tessdata", lang);
 }
 
 void api_setup(tesseract::TessBaseAPI* tess) {

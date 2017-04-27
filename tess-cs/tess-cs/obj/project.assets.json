@@ -7381,10 +7381,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programmering\\PUM-OCR\\tess-cs\\tess-cs.csproj",
+      "projectUniqueName": "C:\\Users\\Richard\\Documents\\Programmering\\PUM-OCR\\tess-cs\\tess-cs\\tess-cs.csproj",
       "projectName": "tess-cs",
-      "projectPath": "D:\\Programmering\\PUM-OCR\\tess-cs\\tess-cs.csproj",
-      "outputPath": "D:\\Programmering\\PUM-OCR\\tess-cs\\obj\\",
+      "projectPath": "C:\\Users\\Richard\\Documents\\Programmering\\PUM-OCR\\tess-cs\\tess-cs\\tess-cs.csproj",
+      "outputPath": "C:\\Users\\Richard\\Documents\\Programmering\\PUM-OCR\\tess-cs\\tess-cs\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

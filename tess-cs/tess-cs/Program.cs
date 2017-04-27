@@ -13,8 +13,8 @@ namespace tess_cs
             Console.WriteLine("SUP!");
             Console.ReadLine();
 
-            string text = FromArray("D:/Programmering/PUM-OCR/tess-cs/res/ocr-test.jpg");
-            //string text = FromFile("D:/Programmering/PUM-OCR/tess-cs/res/phototest.tif");      
+            string text = FromArray("C:/Users/Richard/Documents/Programmering/PUM-OCR/tess-cs/res/phototest.tif");
+            //string text = FromFile("C:/Users/Richard/Documents/Programmering/PUM-OCR/tess-cs/res/");      
 
             Console.WriteLine(text);         
             Console.ReadLine();        

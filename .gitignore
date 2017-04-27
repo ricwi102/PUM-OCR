@@ -8,9 +8,9 @@ tess-lib/*
 
 # VS Project #
 ##############
-tess-cs/*.dll
-tess-cs/bin/*
-tess-cs/obj/debug/*
+tess-cs/tess-cs/*.dll
+tess-cs/tess-cs/bin/*
+tess-cs/tess-cs/obj/debug/*
 *.user
 *.log
 *.tlog
