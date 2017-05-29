@@ -24,7 +24,7 @@ namespace tess_cs
         public static extern void APIInit(IntPtr tess, string lang = "eng");
 
         [DllImport(Constants.dllName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "api_setup")]
-        public static extern void APISetup(IntPtr tess);
+        public static extern void APISetup(IntPtr tess, int settings);
 
         [DllImport(Constants.dllName, CallingConvention = CallingConvention.Cdecl, EntryPoint = "set_img_path")]
         public static extern int SetImgPath(IntPtr tess, string path);

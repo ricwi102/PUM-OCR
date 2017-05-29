@@ -3,7 +3,7 @@
 
 
 #include "tessapi.h"
-#include "math.h""
+#include "math.h"
 
 
 
@@ -19,34 +19,52 @@ void api_init(tesseract::TessBaseAPI* tess, const char* lang) {
 	tess->Init("./tessdata", lang);
 }
 
-void api_setup(tesseract::TessBaseAPI* tess) {
+
+/**
+ * Should be used before initalizaton
+ * Settings == 1 disables dictionaries
+ */
+void api_setup(tesseract::TessBaseAPI* tess, int settings) {
 	tess->SetPageSegMode(tesseract::PageSegMode::PSM_AUTO);
 	tess->SetVariable("save_best_choices", "T");
+	if (settings == 1) {
+		tess->SetVariable("load_system_dawg", "0");
+		tess->SetVariable("load_freq_dawg", "0");
+	}
 }
 
+// Set image by path
 int set_img_path(tesseract::TessBaseAPI* tess, const char* path) {
 	PIX* pixs = pixRead(path);
 	return rec_img(tess, pixs);	
 }
 
+// Set image by array. Only Tiff format supported on Windows
 int set_img_array(tesseract::TessBaseAPI* tess, l_uint8* im_array, int size, int page = 0 ) {
 	PIX* pixs = pixReadMemTiff(im_array, size, page);
 	return rec_img(tess, pixs);
 }
 
+// Recognizes text from image and saves it to an internal buffer
 int rec_img(tesseract::TessBaseAPI* tess, PIX* pixs) {
 	if (!pixs) { return 1; }
 
-	tess->SetImage(pixs);
+	Pix* pixb = binarization_otsu(pixs);
+
+	pixWrite("pic_binary.tif", pixb, IFF_TIFF);
+
+	tess->SetImage(pixb);
 	pixDestroy(&pixs);
+	pixDestroy(&pixb);
 
 	return tess->Recognize(0);
 }
+
 /**
  * Returns text by writing to a given buffer. Since the buffer can be smaller
  * than the real text contained, this function can be called multiple times with
- * with increased offsets.
- * Returns 0 if there 
+ * with increased offset.
+ * Returns 0 if end of text reachee
  * output: Output buffer
  * offset: Offset in bufferlengths
  * length: Length of the buffer
@@ -71,12 +89,14 @@ int get_text(tesseract::TessBaseAPI* tess, char* output, const int offset, const
 	return r_value;	
 }
 
+// Gets length of internaly stored text
 int get_text_length(tesseract::TessBaseAPI* tess, int incl_null = 1) {
 	const char* text = tess->GetUTF8Text();
 	int length = strlen(text);
 	delete[] text;
 	return length + incl_null;
 }
+
 
 void c_str_cpy(char* destination, const char* source, const int length) {
 	for (int i = 0; i < length; ++i) {
@@ -92,32 +112,31 @@ void get_init_lang(tesseract::TessBaseAPI* tess, char* output) {
 	strcpy(output, tess->GetInitLanguagesAsString());
 }
 
-/* 
-int main(int argc, char *argv[])
-{
 
-	std::cout << "program started\n\n";
-
-	tesseract::TessBaseAPI* tess = base_api_create();
-	api_init(tess);
-	api_setup(tess);
-	set_pic_path(tess, argv[1]);
-
-	char text[10];
-	int i = 0;
-	char real_text[300];
-	while (get_text(tess, text, i, 10, 0)) {
-		for (int j = 0; j < 10; ++j) {
-			real_text[i * 10 + j] = text[j];
-		}
-		i++;
+#define SCOREFRACT 0.1
+#define X_RES 100
+#define Y_RES 100
+#define SMOOTHING 2
+// Binarizaion by the otsu method. First turns image to grayscale
+Pix* binarization_otsu(Pix* pixs) {
+	if (!pixs) {
+		return nullptr;
 	}
+
+	Pix* pixg = pixConvertRGBToGray(pixs, 0, 0, 0);
+
+	Pix* temp;
+	Pix* r_pix;
+	l_int32 thresh = pixOtsuAdaptiveThreshold(pixg, X_RES, Y_RES, SMOOTHING, SMOOTHING, SCOREFRACT, &temp, &r_pix);
+
+	pixDestroy(&pixg);
+	pixDestroy(&temp);
 	
-	std::cout << real_text;
+	return r_pix;
+}
 
-	tess_clear(tess);
-	delete[] tess;
 
+/*
+int main(int argc, char *argv[]){
 	return 0;
 }*/
-

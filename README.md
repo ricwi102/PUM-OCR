@@ -56,6 +56,7 @@ endif()
 5. Projektet kan sedan öppnas. Förslagsvis körs 'Unload all projects' på "Training Tools"-mappen
 6. Vissa dependencies har följt med från leptonica som inte behövs och under 
 `Properties->Linker->Input->Additional Dependencies` kan pvt.cppan.demo.* tas bort för tesseract och libtesseract
+7. På en av datorerna testade på blev det ett problem med länkar till libraries. Ifall detta händer läggs `*/lept/buildxx/src` och `*/lept/leptonica-master/src` till under `Properties->C/C++->General->Additional Include Directories`
 
 Enklaste vägen härifrån är att ta bort de filer som finns under tesseract projektet och lägga till de filer som finns under `PUM-OCR/tessapi-cpp/`
 	

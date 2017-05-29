@@ -10,11 +10,17 @@ namespace tess_cs
     {
         static void Main(string[] args)
         {      
-            Console.WriteLine("SUP!");
+            Console.WriteLine("START! \nreferens:" +
+                " \nO**: Ö" +                
+                " \no**: ö" +
+                " \nA**: Ä" +
+                " \na**: ä" +
+                " \nA*: Å" +
+                " \na*: å");
             Console.ReadLine();
 
-            string text = FromArray("C:/Users/Richard/Documents/Programmering/PUM-OCR/tess-cs/res/phototest.tif");
-            //string text = FromFile("C:/Users/Richard/Documents/Programmering/PUM-OCR/tess-cs/res/");      
+            string text = FromArray("./res/kvitto3.png");
+            //string text = FromFile("./res/");   
 
             Console.WriteLine(text);         
             Console.ReadLine();        
@@ -22,9 +28,8 @@ namespace tess_cs
 
         static string FromFile(string path) {
             IntPtr tess = TessAPI.APICreate();
+            TessAPI.APISetup(tess, 1);
             TessAPI.APIInit(tess, "swe");
-            TessAPI.APISetup(tess);
-            
 
             TessAPI.SetImgPath(tess, path);
 
@@ -37,9 +42,8 @@ namespace tess_cs
 
         static string FromArray(string path) {
             IntPtr tess = TessAPI.APICreate();
+            TessAPI.APISetup(tess, 1);
             TessAPI.APIInit(tess, "swe");
-            TessAPI.APISetup(tess);
-
             
             byte[] imStream = ImageHandler.ImageToArray(@path);
             TessAPI.SetImgArray(tess, imStream, imStream.Length);            

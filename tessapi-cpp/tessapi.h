@@ -14,7 +14,7 @@ extern "C" {
 	DLL_EXPORT tesseract::TessBaseAPI* base_api_create();
 	DLL_EXPORT void api_end(tesseract::TessBaseAPI* tess);
 	DLL_EXPORT void api_init(tesseract::TessBaseAPI* tess, const char* lang);
-	DLL_EXPORT void api_setup(tesseract::TessBaseAPI* tess);	
+	DLL_EXPORT void api_setup(tesseract::TessBaseAPI* tess, int settings);	
 
 	DLL_EXPORT int set_img_path(tesseract::TessBaseAPI* tess, const char* path);
 	DLL_EXPORT int set_img_array(tesseract::TessBaseAPI* tess, l_uint8* im_array, int size, int page);
@@ -27,6 +27,7 @@ extern "C" {
 }
 
 // Internal functions
+Pix* binarization_otsu(Pix* pixs);
 int rec_img(tesseract::TessBaseAPI* tess, PIX* pixs);
 void c_str_cpy(char* destination, const char* source, const int length);
 
